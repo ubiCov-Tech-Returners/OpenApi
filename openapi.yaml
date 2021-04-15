@@ -1,0 +1,148 @@
+openapi: 3.0.1
+info:
+  title: 'London Covid Data and Exploration'
+  version: 1.0.0
+  description: >-
+
+    Create a web app that enables users to explore the relationship between Covid-19 cases and socioeconomic factors
+    Questions
+    Is the uptake of covid vaccinations impacted in areas with lower income? 
+    Have covid cases fallen enough to safely reopen my business? How has Covid-19 affected businesses in your area? 
+    Is the spread of covid-19 in your area related to nights out? Is low income effecting vaccination uptake. 
+    MVP will cover boroughs of London.
+    Future releases
+    drilling into borough level data,zooming out to larger regions,automation of data extraction fro sources
+    autodetect viewers region to default map display
+  license:
+    name: Apache 2.0
+    url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
+externalDocs:
+  description: Find out more about Ubicov
+  url: 'https://classroom.google.com/c/NTg1MTgxODU0Mjda/m/Mjk3NzI0MzQxMzUx/details'
+servers:
+  - url: 'http://localhost:8080/'
+  
+tags:
+  - name: MapInfo
+    description: Data to be plotted in a map
+    #externalDocs:
+     # description: Find out more
+      #url: 'http://swagger.io'
+  - name: GeoLocation
+  - name: Furlough
+    description: Fourlough figures
+  - name: Deprivation
+    description: Operations about user
+    #externalDocs:
+     # description: Find out more
+      #url: 'http://swagger.io'
+  - name: Covid Data
+  - name: Vaccination
+paths:
+
+  
+  /MapInfo/:
+    get:
+      tags:
+        - MapInfo
+      summary: Data to be plotted in a map
+      responses:
+        '200':
+          description: Info to draw in the map
+          content: {}
+        '400':
+          description: Invalid 
+          content: {}
+  /loc/:
+    get:
+      tags:
+        - GeoLocation
+      summary: List of London Borough with Longitude Latitude information
+      responses:
+        '200':
+          description: Info to draw in the map
+          content: {}
+  '/loc/{district}':
+    get:
+      tags:
+        - GeoLocation
+      summary: Get the longitude and latitude information for a specific Borough
+      operationId: getUserByName
+      parameters:
+        - name: district
+          in: path
+          description: ' '
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Info to draw in the map
+          content: {}
+
+components:
+  schemas:
+    
+    GeoLocation:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        ladCode:
+          type: string
+        district:
+          type: string
+        longitude:
+          type: string
+        latitude:
+          type: string
+      xml:
+        name: GeoLocation
+    Furlough:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        total_furloughed:
+          type: integer
+          format: int64
+        ladCode:
+          type: string
+        district:
+          type: string
+        date:
+          type: string
+        female_furloughed:
+          type: integer
+          format: int64
+        male_furloughed:
+          type: integer
+          format: int64
+      xml:
+        name: Furlough
+    CovidData:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        date:
+          type: string
+        ladCode:
+          type: string
+        district:
+          type: string
+        newCases:
+          type: integer
+          format: int64
+        newDeaths:
+          type: integer
+          format: int64
+        
+      xml:
+        name: CovidData
+
+
+ 
